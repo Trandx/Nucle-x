@@ -1,0 +1,38 @@
+
+input CreateClientInput @validator {
+
+    name: String! @rules(apply: ["required"])
+    redirect: String
+    type: String @rules(apply: ["required"])
+    description: String
+}
+
+input UpdateClientInput @validator {
+
+    # client: Client @rules(apply: ["required"])
+    id: ID @rules(apply: ["required"])
+    name: String
+    redirect: String
+    revoked: Boolean
+    description: String
+
+}
+
+input NewClientTokenInput {
+
+    id: ID @rules(apply: ["required"])
+}
+
+input DeleteClientInput {
+     id: ID @rules(apply: ["required"])
+}
+
+input ListClientIput{
+    page: String
+    limit: String
+    search: String
+}
+
+########### import model ##########
+
+#import ../Type/Model/index.graphql

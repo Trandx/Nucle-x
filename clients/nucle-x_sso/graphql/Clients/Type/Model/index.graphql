@@ -1,0 +1,19 @@
+type Client {
+    id: ID!
+    name: String!
+    secret: String!
+    redirect: String
+    provider: String
+    personal_access_client: Boolean!
+    password_client: Boolean!
+    revoked: Boolean!
+    type: String!
+    description: String
+    created_at: DateTime!
+    updated_at: DateTime!
+    user: User! @belongsTo
+}
+
+########## impot User Model from Auth ######
+
+#import  ../../../Auth/Type/Model/index.graphql

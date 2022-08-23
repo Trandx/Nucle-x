@@ -1,0 +1,6 @@
+
+type Errors{
+    status: Boolean!
+    code: String!
+    message: String!
+}

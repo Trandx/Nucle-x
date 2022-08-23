@@ -1,0 +1,64 @@
+
+##################################
+
+type CreateClientSuccess{
+    status: Boolean!
+    code: String!
+    data: Client!
+}
+
+type UpdateClientSuccess{
+    status: Boolean!
+    code: String!
+    data: Client!
+}
+
+type NewClientTokenSuccess{
+    status: Boolean!
+    code: String!
+    data: Client!
+}
+
+type DeleteClientSuccess{
+    status: Boolean!
+    code: String!
+    data: Client!
+}
+
+################## for Queries ############
+type Pagination{
+    count: Int!
+    total: Int!
+    perPage: Int!
+    lastPage: Int!
+    firstPage:Int!
+    currentPage: Int!
+    hasMorePage: Boolean!
+}
+type DataPaginate{
+    pagination: Pagination!
+    data:  [Client!]
+}
+type ListClientSuccess{
+    status: Boolean!
+    code: String!
+    data: DataPaginate!
+}
+
+##################
+
+union CreateClientResult = CreateClientSuccess | Errors
+union UpdateClientResult = UpdateClientSuccess | Errors
+union NewClientTokenResult = NewClientTokenSuccess | Errors
+union DeleteClientResult = DeleteClientSuccess | Errors
+
+
+union ListClientResult = ListClientSuccess | Errors
+
+
+
+### input import ####
+
+#import Error.graphql
+
+#import Model/index.graphql

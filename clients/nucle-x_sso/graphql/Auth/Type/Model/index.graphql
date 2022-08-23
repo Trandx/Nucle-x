@@ -1,0 +1,43 @@
+enum RegisterStatuses {
+    MUST_VERIFY_EMAIL
+    SUCCESS
+}
+
+type Avatar {
+    thumb: String
+    real_size: String
+    old:[String]
+}
+
+type Email{
+    active: String
+    old: [String]
+}
+
+type Phones{
+    active: String
+    all: [String]
+}
+
+type User {
+    id: ID!
+    first_name: String!
+    last_name: String
+    email: Email
+    phones: Phones
+    username: String
+    birthday: String
+    avatar: Avatar
+    created_at: DateTime!
+    updated_at: DateTime!
+    roles: [Role] @belongsToMany #to solve N+1 queries
+}
+
+type Role {
+    id: ID!
+    name: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type UserPayload{ user: User! }

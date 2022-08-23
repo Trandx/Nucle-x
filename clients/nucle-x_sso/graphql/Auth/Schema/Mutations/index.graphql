@@ -1,0 +1,41 @@
+
+
+# extend type Mutation {
+#     login(input: LoginInput @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve")
+#     refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve")
+#     logout: LogoutResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve")
+#     forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ForgotPassword@resolve")
+#     updateForgottenPassword(input: NewPasswordWithCodeInput @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ResetPassword@resolve")
+#     register(input: RegisterInput @spread): RegisterResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Register@resolve")
+#     socialLogin(input: SocialLoginInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\SocialLogin@resolve")
+#     verifyEmail(input: VerifyEmailInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\VerifyEmail@resolve")
+#     updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve") @guard(with: ["api"])
+# }
+type Mutation {
+    login_SSO(input: LoginInput @spread): LoginResult!  @field(resolver: "Clients\\Auth\\login")
+    #  #@spread convert object to php array
+    # refreshToken(input: RefreshTokenInput @spread): RefreshTokenResult! @field(resolver: "Auth\\refreshToken")
+    # logout: LogoutResult! @guard(with: ["api"]) @field(resolver: "Auth\\logout")
+    # forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResult! @field(resolver: "Auth\\forgotPassword")
+    # # updateForgottenPassword(input: NewPasswordWithCodeInput @spread): ForgotPasswordResult! @field(resolver: "Auth\\updateForgottenPassword")
+    # register(input: RegisterInput @spread): RegisterResult! @field(resolver: "Auth\\register")
+    # socialLogin(input: SocialLoginInput! @spread): LoginResult!  @field(resolver: "Auth\\socialLogin")
+    # #verifyEmail(input: VerifyEmailInput! @spread): TokenPayload! @field(resolver: "Auth\\verifyEmail")
+    # resetPassword(input: ResetPasswordInput! @spread): ResetPasswordResult! @field(resolver: "Auth\\resetPassword")
+    # updatePassword(input: UpdatePasswordInput! @spread): UpdatePasswordResult! @guard(with: ["api"]) @field(resolver: "Auth\\updatePassword")
+    #                                                                         #@whereAuth(relation: "user", guard:"api")
+    # verifyCode(input: VerifyCodeInput! @spread): VerifyCodeResult! @field(resolver: "Auth\\verifyCode")
+    # resendCode(input: ResendCodeInput! @spread): ResendCodeResult! @field(resolver: "Auth\\resendCode")
+
+}
+
+
+### type import ####
+
+#import ../../Type/index.graphql
+###############################
+
+### input import ####
+
+#import ../../Input/index.graphql
+

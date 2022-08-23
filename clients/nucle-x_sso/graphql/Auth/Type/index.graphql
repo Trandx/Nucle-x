@@ -1,0 +1,135 @@
+
+type TokenPayload  {
+    access_token: String!
+    refresh_token: String
+    expires_in: Int
+    token_type: String
+    user: User!
+}
+
+type RegisterData{
+    message: String!
+    msg_email: String
+    msg_phone: String
+    user: User!
+}
+
+type VerifyCodeData{
+    message: String!
+    have_other: Boolean
+    code_for: String
+    user: User!
+}
+
+type ResendCodeData{
+    message: String!
+    msg_email: String
+    msg_phone: String
+    #user: User!
+}
+
+type ForgotPasswordData {
+    message: String
+    msg_email: String
+    msg_phone: String
+}
+
+type ResetPasswordData{
+    message: String!
+}
+
+type UpdatePasswordData{
+    message: String!
+}
+
+
+##################################
+
+type RefreshTokenSuccess {
+    status: Boolean!
+    code: String!
+    data: TokenPayload!
+
+}
+
+type LogoutSuccess {
+    status: Boolean!
+    code: String!
+    data: UserPayload!
+}
+
+type ForgotPasswordSuccess {
+    status: Boolean!
+    code: String!
+    data: ForgotPasswordData!
+}
+
+type RegisterSuccess {
+    status: Boolean!
+    code: String!
+    data: TokenPayload!
+}
+
+type UpdatePasswordSuccess {
+    status: String!
+    code: String!
+    data: UpdatePasswordData!
+}
+
+type LoginSuccess{
+    status: Boolean!
+    code: String!
+    data: TokenPayload!
+}
+
+type RegisterSuccess{
+    status: Boolean!
+    code: String!
+    data: RegisterData!
+}
+
+type VerifyCodeSuccess {
+    status: Boolean!
+    code: String!
+    data: VerifyCodeData!
+}
+
+type ResendCodeSuccess {
+    status: Boolean!
+    code: String!
+    data: ResendCodeData!
+}
+
+type ResetPasswordSuccess {
+    status: Boolean!
+    code: String!
+    data: ResetPasswordData!
+}
+
+
+############################################
+
+union LoginResult = LoginSuccess | Errors
+
+union LogoutResult = LogoutSuccess | Errors
+
+union RefreshTokenResult = RefreshTokenSuccess |Errors
+
+union RegisterResult = RegisterSuccess |Errors
+
+union UpdatePasswordResult = UpdatePasswordSuccess |Errors
+
+union ForgotPasswordResult = ForgotPasswordSuccess |Errors
+
+union ResetPasswordResult = ResetPasswordSuccess |Errors
+
+union VerifyCodeResult = VerifyCodeSuccess |Errors
+
+union ResendCodeResult = ResendCodeSuccess |Errors
+
+
+### input import ####
+
+#import Error.graphql
+
+#import Model/index.graphql

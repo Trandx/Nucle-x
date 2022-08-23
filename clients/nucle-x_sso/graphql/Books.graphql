@@ -1,0 +1,28 @@
+
+# extend type Query{
+#      book(id:ID! @eq @rules(apply: ["prohibits:title", "required_without:title"])
+#         title: String @eq @rules(apply: ["prohibits:id", "required_without:id"])
+#     ): Books @find
+
+#     books: [Books] @all
+#     booksPaginated: [Books!]! @paginate
+# }
+
+# extend type Mutation{
+#     createBook(title: String!, categories_id: Int!): Books! @create
+
+#     updateBook(id: ID!, title: String!, categories_id: Int!): Books! @update
+
+#     deleteBook(id: ID!): Books @delete
+
+#     upsertBook(id: ID!, title: String!, categories_id: Int!): Books! @upsert
+# }
+
+# type Books {
+#     id: ID!
+#     title: String!
+#     updated_at: DateTime!
+#     created_at: DateTime!
+#     category: Categories @belongsTo #to solve N+1 queries
+#     comments: [Comments] @hasMany
+# }

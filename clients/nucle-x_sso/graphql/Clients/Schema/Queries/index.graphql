@@ -1,0 +1,9 @@
+extend type Query {
+    ListClient(input: ListClientIput @spread): ListClientResult! @guard(with: ["api"])  @field(resolver: "Clients\\listClient")
+
+    "List multiple users."
+    SearchClient(
+      "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
+      name: String @where(operator: "like")
+    ): [Client!]! @paginate(defaultCount: 10  model: "App\\Models\\OauthClient")
+}

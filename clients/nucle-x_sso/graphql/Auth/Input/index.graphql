@@ -1,0 +1,82 @@
+input LoginInput {
+    # email: String @eq @rules(apply: ["prohibits:phone", "required_without:phone", , "email:rfc,dns"])
+    # phone: String @eq @rules(apply: ["prohibits:email", "required_without:email", "regex:/^[+]{1}[1-9]{1,4}[-][0-9]{8,14}/"])
+    # username: String @eq @rules(apply: ["prohibits:email", "required_without:email", "regex:/^[+]{1}[1-9]{1,4}[-][0-9]{8,14}/"])
+    login: String! @eq @rules(apply: ["required"])
+    password: String!
+}
+
+
+
+input RefreshTokenInput {
+    refresh_token: String!
+}
+
+input ForgotPasswordInput {
+    #email: String! @rules(apply: ["required", "email"])
+    email: String @eq @rules(apply: ["prohibits:phone", "required_without:phone", , "email:rfc,dns",])
+    phone: String @eq @rules(apply: ["prohibits:email", "required_without:email", "regex:/^[+]{1}[1-9]{1,4}[-][0-9]{8,14}/"])
+}
+
+# input NewPasswordWithCodeInput {
+#     email: String! @rules(apply: ["required", "email"])
+#     token: String! @rules(apply: ["required", "string"])
+#     password: String! @rules(apply: ["required", "confirmed", "min:8"])
+#     password_confirmation: String!
+# }
+
+input RegisterInput {
+    first_name: String
+    last_name: String! @rules(apply: ["required", "string"])
+    phone: String! @rules(apply: ["required" , "unique:users,phone.*", "regex:/^[+]{1}[1-9]{1,4}[-][0-9]{8,14}/" ]) #"phone", "unique:users,phone" +237-680204264
+    email: String! @rules(apply: ["required", "unique:users,email" , "email:rfc,dns"]) #"email", "unique:users,email"
+    username: String
+    birthday: Date
+    password: String! @rules(apply: ["required", "confirmed", "min:8"])
+    password_confirmation: String!
+}
+
+input SocialLoginInput {
+    social_type: String! @rules(apply: ["required"])
+    token: String! @rules(apply: ["required"])
+}
+
+input VerifyEmailInput {
+    token: String!
+}
+
+input UpdatePasswordInput {
+    old_password: String!
+    password: String! @rules(apply: ["required", "confirmed", "min:8"])
+    password_confirmation: String!
+}
+
+input ResetPasswordInput{
+    phone: String @rules(apply: ["required_without:email" , "regex:/^[+]{1}[1-9]{1,4}[-][0-9]{8,14}/" ]) #"phone", "unique:users,phone" +237-680204264
+    email: String @rules(apply: ["required_without:phone", "email:rfc,dns"]) #"email", "unique:users,email"
+    password: String! @rules(apply: ["required", "confirmed", "min:8"])
+    password_confirmation: String!
+    code: String! @rules(apply: ["required", "string"])
+}
+
+input VerifyCodeInput{
+    email_code: String @eq @rules(apply: ["prohibits:phone", "required_without:phone_code"])
+    phone_code: String @eq @rules(apply: ["prohibits:email", "required_without:email_code"])
+    user_id: ID
+}
+
+input ResendCodeInput{
+    user_id: ID
+}
+
+# extend type Mutation {
+#     login(input: LoginInput @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve")
+#     refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve")
+#     logout: LogoutResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve")
+#     forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ForgotPassword@resolve")
+#     updateForgottenPassword(input: NewPasswordWithCodeInput @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ResetPassword@resolve")
+#     register(input: RegisterInput @spread): RegisterResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Register@resolve")
+#     socialLogin(input: SocialLoginInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\SocialLogin@resolve")
+#     verifyEmail(input: VerifyEmailInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\VerifyEmail@resolve")
+#     updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve") @guard(with: ["api"])
+# }

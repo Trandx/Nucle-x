@@ -1,0 +1,99 @@
+version: '3.8'
+services:
+######### services et outils ############
+  # nginx:
+  #   container_name: nucle-x_nginx
+  #   hostname: nginx
+  #   image: nginx:stable-alpine as production-stage
+  #   #restart: always
+  #   #tty: true
+  #   ports:
+  #       - "80:80"
+  #       - "443:443"
+  #   volumes:
+  #       - ./services/nginx:/etc/nginx/conf.d
+  #       - ./services/nginx:/var/www/local.dev
+  #       - ./services/nginx/ssl/:/etc/nginx/ssl/
+  #   # depends_on:
+  #   #   - php
+  #   networks:
+  #       - nucle-x_network
+
+  # php:
+  #   container_name: nucle-x_php
+  #   build: 
+  #     context: .
+  #     dockerfile: ./services/php/Dockerfile
+  #   volumes:
+  #       - ./services/php:/var/www/local.dev
+  #       - ./services/php:/usr/local/etc/php  #/php.ini
+  #   networks:
+  #       - nucle-x_network   
+
+#### applications clients ############
+
+############ front-end #############
+  nucle-x_sso_front:
+    container_name: nucle-x_sso_front
+    hostname: nucle-x_sso_front
+    build: 
+      context: .
+      dockerfile: ./clients/nucle-x_sso_front/Dockerfile
+    
+    env_file:
+      - ./clients/nucle-x_sso_front/.env
+    environment:
+      VUE_APP_API_HOST: nucle-x_sso
+      CHOKIDAR_USEPOLLING: 'true'
+      
+    volumes:
+      - ./clients/nucle-x_sso_front:/app
+   
+    ports:
+      - 4001:8080
+    depends_on:
+      - nucle-x_sso
+    networks:
+      - nucle-x_network
+
+############# backend ##############
+  nucle-x_sso:
+    container_name: nucle-x_sso
+    hostname: nucle-x_sso
+    build: 
+      context: .
+      dockerfile: ./clients/nucle-x_sso/Dockerfile
+    
+    env_file:
+      - ./clients/nucle-x_sso/.env
+    environment:
+      DB_HOST: db_sso ##nom du service sso
+      
+    volumes:
+      - ./clients/nucle-x_sso:/app
+   
+    ports:
+      - 8001:8000
+    depends_on:
+      - db_sso
+    networks:
+      - nucle-x_network
+
+  db_sso:
+    container_name: nucle-x_db_sso
+    image: postgres
+    #restart: always
+    volumes:
+     - ./services/db/db_sso:/usr/lib/postgresql/data
+    
+    environment:
+      POSTGRES_DB: db_sso
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - 5434:5432
+    networks:
+      - nucle-x_network
+
+networks:
+  nucle-x_network:
