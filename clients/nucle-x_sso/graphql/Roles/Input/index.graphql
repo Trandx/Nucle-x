@@ -1,0 +1,17 @@
+input UpsertRoleInput @validator {
+
+    # client: Client @rules(apply: ["required"])
+    id: ID
+    name: String!
+    description: String
+
+}
+
+
+input DeleteRoleInput {
+     id: ID @rules(apply: ["required"])
+}
+
+########### import model ##########
+
+#import ../Type/Model/index.graphql

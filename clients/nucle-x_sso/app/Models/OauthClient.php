@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Ramsey\Uuid\Uuid;
 
@@ -54,6 +55,11 @@ class OauthClient extends Model
     {
         //return $this->setConnection('mysql')->belongsTo(User::class);
         return $this->belongsTo(User::class);
+    }
+    public function permissions():BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'client_permissions');
+
     }
 
 }

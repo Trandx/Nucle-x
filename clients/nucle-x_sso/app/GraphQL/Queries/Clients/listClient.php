@@ -18,16 +18,17 @@ final class listClient
     public function __invoke($_, array $args)
     {
         // args: page and limit
-        $args = (object) $args;
-
-        $user = $this->isClientAdmin();
-
-
-        if (!$user) {
-            return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
-        }
-
         try {
+            $args = (object) $args;
+
+            $user = $this->isClientAdmin();
+
+
+            if (!$user) {
+                return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
+            }
+
+
             //$products = $art->products->skip($offset*$limit)->take($limit)->get()
 
             $query = OauthClient::where([ "user_id" => $user->id]);

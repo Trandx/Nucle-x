@@ -1,6 +1,6 @@
 
 extend type Mutation {
-    createClient(input: CreateClientInput @spread): CreateClientResult! @guard(with: ["api"])  @field(resolver: "Clients\\create")
+    CreateClient(input: CreateClientInput @spread): CreateClientResult! @guard(with: ["api"])  @field(resolver: "Clients\\create")
     #  #@spread convert object to php array
     UpdateClient(input: UpdateClientInput @spread): UpdateClientResult! @guard(with: ["api"]) @field(resolver: "Clients\\update")
     NewClientToken(input:NewClientTokenInput @spread): NewClientTokenResult! @guard(with: ["api"]) @field(resolver: "Clients\\newClientToken")

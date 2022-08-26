@@ -12,8 +12,10 @@ type Client {
     created_at: DateTime!
     updated_at: DateTime!
     user: User! @belongsTo
+    permissions: [Permission] @belongsToMany
 }
 
 ########## impot User Model from Auth ######
 
 #import  ../../../Auth/Type/Model/index.graphql
+#import ../../../Permissions/Type/Model/index.graphql

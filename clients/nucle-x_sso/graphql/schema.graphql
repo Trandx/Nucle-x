@@ -11,6 +11,7 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 ############### Clients Modules ###########
 
 #import Clients/Schema/index.graphql
+#import Permissions/Schema/index.graphql
 
 
 

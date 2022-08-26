@@ -27,12 +27,6 @@ input DeleteClientInput {
      id: ID @rules(apply: ["required"])
 }
 
-input ListClientIput{
-    page: String
-    limit: String
-    search: String
-}
-
 ########### import model ##########
 
 #import ../Type/Model/index.graphql

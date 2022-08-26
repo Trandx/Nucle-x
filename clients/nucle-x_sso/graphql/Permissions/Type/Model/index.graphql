@@ -1,0 +1,8 @@
+type Permission {
+    id: ID!
+    name: String!
+    description: String!
+    default: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+}

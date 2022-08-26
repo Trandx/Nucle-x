@@ -18,27 +18,32 @@ final class create
     public function __invoke($_, array $args)
     {
 
+        try {
+            $args = (object) $args;
 
-        $args = (object) $args;
+            //check user role
 
-        //check user role
+            $user = $this->isClientAdmin();
 
-        $user = $this->isClientAdmin();
+            if (!$user) {
+                return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
+            }
 
-        if (!$user) {
-            return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
+            /// clients type
+
+            // $datas["user"] = $user;
+
+            if($datas = $this->generateToken($args, $user)){
+                return $this->success("CreateClientSuccess", $datas);
+            }
+
+            return $this->errors("Errors","Client type '$args->type' isn't referenced ", Response::HTTP_UNAUTHORIZED);
+
+        } catch (\Throwable $e) {
+
+            return $this->errors("Errors",$e->getMessage(), Response::HTTP_UNAUTHORIZED);
+
         }
-
-        /// clients type
-
-        // $datas["user"] = $user;
-
-        if($datas = $this->generateToken($args, $user)){
-            return $this->success("CreateClientSuccess", $datas);
-        }
-
-        return $this->errors("Errors","Client type '$args->type' isn't referenced ", Response::HTTP_UNAUTHORIZED);
-
 
     }
 }

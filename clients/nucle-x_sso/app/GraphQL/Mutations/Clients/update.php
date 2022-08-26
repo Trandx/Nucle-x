@@ -17,18 +17,19 @@ final class update
     public function __invoke($_, array $args)
     {
         //check role
-
-        $user = $this->isClientAdmin();
-
-        if (!$user) {
-            return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
-        }
-        //$datas["user"] = $user;
-
-        unset($args["directive"]);
-
-
         try {
+
+            $user = $this->isClientAdmin();
+
+            if (!$user) {
+                return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
+            }
+            //$datas["user"] = $user;
+
+            unset($args["directive"]);
+
+
+
             $client = OauthClient::where(['id'=> $args["id"], "user_id" => $user->id])->first(); //->update($args);
 
             if($client){

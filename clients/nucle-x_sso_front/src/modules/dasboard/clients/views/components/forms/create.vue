@@ -20,11 +20,11 @@
 
         <div class="w-full flex">
             <div class="w-1/6 flex justify-start ">
-                <label for="clientDescription" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">Active</label>
+                <label for="clientDescription" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">revoked</label>
             </div>
             <div class=" w-5/6 flex justify-start">
                 <label for="clientActive" class="inline-flex relative items-center cursor-pointer">
-                    <input type="checkbox" id="clientActive" v-model="formData.active" class="sr-only peer" >
+                    <input type="checkbox" id="clientActive" v-model="formData.revoked" class="sr-only peer" >
                     <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full  after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-800 after:border-gray-800 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                     
                 </label>
@@ -32,6 +32,26 @@
             
         </div>
         <div class="w-full flex">
+            <div class="w-1/6 flex justify-start ">
+                <label for="clientType" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">type</label>
+            </div>
+
+            <div class=" w-5/6 flex justify-start">
+                <Multiselect class= "multiselect"
+                    v-model="formData.type"
+                    mode="single"
+                    placeholder="Choose client type"
+                    :close-on-select="false"
+                    :options="options.type"
+                />
+                <!-- <select id="clientAccessType" v-model="formData.accessType" class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected value=""></option>
+                    <option value="public">public</option>
+                    <option value="private">private</option>
+                </select> -->
+            </div>
+        </div>
+        <!-- <div class="w-full flex">
             <div class="w-1/6 flex justify-start ">
                 <label for="clientAccessType" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">access type</label>
             </div>
@@ -44,29 +64,24 @@
                     :close-on-select="false"
                     :options="options.accessType"
                 />
-                <!-- <select id="clientAccessType" v-model="formData.accessType" class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected value=""></option>
-                    <option value="public">public</option>
-                    <option value="private">private</option>
-                </select> -->
             </div>
-        </div>
+        </div> -->
 
         <div class="w-full flex">
             <div class="w-1/6 flex justify-start ">
-                <label for="clientAccessType" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">Actions</label>
+                <label for="clientAccessType" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">permissions</label>
             </div>
 
             <div class=" w-5/6 flex justify-start">
                 <Multiselect class= "multiselect"
-                    v-model="formData.actions"
+                    v-model="formData.permissions"
                     mode="tags"
                     placeholder="search client's Action"
                     :close-on-select="false"
                     :searchable="true"
                     :object="false"
                     :create-option="false"
-                    :options="options.actions"
+                    :options="options.permissions"
                 />
             </div>
         </div>
@@ -102,7 +117,7 @@
                 save
             </button>
 
-            <button type="rest" class="mx-5 w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+            <button @click.prevent="reset" class="mx-5 w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                 reset
             </button>
        </div>
@@ -114,6 +129,9 @@
 <script>
 
 import Multiselect from '@vueform/multiselect'
+import { mapGetters } from 'vuex';
+
+import ResetForm from '../../../../../../mixins/forms/index'
 
 //import {mapGetters} from 'vuex'
 
@@ -126,39 +144,44 @@ export default {
 
     props:{
         datas:{
-            type: Object
+            default: null
         },
 
-        editForm:{
-            type: Object
-        }
+        // editForm:{
+        //     type: Object
+        // }
         
     },
 
     data(){
         return {
-            formData: {},
+            formData: this.$props.datas||{},
             options: {}
         }
     },
-    watch: {
-        editForm: {
-            handler(newval){
-                console.log(newval);
-                this.formData = newval
+    watch:{
+        datas: {
+            handler(newValue) {
+                //console.log(newValue);
+                this.formData = newValue || {}
             },
-
-            deep: true,
-            immediate: true,
-
-        }
+            deep: true
+        },
     },
 
+    methods:{
+        
+        ...mapGetters({
+            'getFormOptions': "Clients/getOptionsofCreateForm"
+        }),
+    },
     created(){
        
-        this.options =this.$store.getters['client/getOptionsForm']
+        this.options =this.getFormOptions()
         
     },
+
+    mixins:[ResetForm]
 
     // computed:{
     //     ...mapGetters({

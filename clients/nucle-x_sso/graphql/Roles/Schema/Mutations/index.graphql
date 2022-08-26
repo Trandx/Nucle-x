@@ -1,0 +1,19 @@
+
+extend type Mutation {
+    UpsertRole(input: UpsertRoleInput! @spread): UpsertRoleResult! @guard(with: ["api"])  @field(resolver: "Roles\\upsert")
+    #  #@spread convert object to php array
+    DeleteRole(input: DeleteRoleInput! @spread): DeleteRoleResult! @guard(with: ["api"]) @field(resolver: "Roles\\delete")
+
+
+}
+
+
+### type import ####
+
+#import ../../Type/index.graphql
+
+###############################
+
+### input import ####
+
+#import ../../Input/index.graphql

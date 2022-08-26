@@ -1,0 +1,6 @@
+extend type Query {
+    ListPermission(input: ListInput @spread): ListPermissionResult! @guard(with: ["api"])  @field(resolver: "Permissions\\listPermission")
+
+}
+
+#import ../../../others/inputs/list.graphql

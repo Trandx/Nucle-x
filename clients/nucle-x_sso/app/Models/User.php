@@ -16,6 +16,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, RolesTrait, ClientTrait;
 
+    public $permissions;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -138,7 +140,20 @@ class User extends Authenticatable
         return $this->hasMany(OauthClient::class);
     }
 
+     /**
+     * To get all users of roles
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function permissions()
+    {
+        //return $this->setConnection('mysql')->belongsTo(User::class);
+            $this->permissions[] = $this->roles()->permissions();
+            $this->permissions[] = $this->belongsToMany(Permission::class, "permission_users");
 
+            return $this;
+        //return $this->belongsToMany(Permission::class, "permission_users");
+    }
 
 
 }

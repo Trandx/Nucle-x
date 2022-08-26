@@ -1,0 +1,19 @@
+
+extend type Mutation {
+    UpsertPermission(input: UpsertPermissionInput! @spread): UpsertPermissionResult! @guard(with: ["api"])  @field(resolver: "Permissions\\upsert")
+    #  #@spread convert object to php array
+    DeletePermission(input: DeletePermissionInput! @spread): DeletePermissionResult! @guard(with: ["api"]) @field(resolver: "Permissions\\delete")
+
+
+}
+
+
+### type import ####
+
+#import ../../Type/index.graphql
+
+###############################
+
+### input import ####
+
+#import ../../Input/index.graphql

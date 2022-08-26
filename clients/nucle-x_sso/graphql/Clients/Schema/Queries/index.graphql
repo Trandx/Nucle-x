@@ -1,5 +1,5 @@
 extend type Query {
-    ListClient(input: ListClientIput @spread): ListClientResult! @guard(with: ["api"])  @field(resolver: "Clients\\listClient")
+    ListClient(input: ListInput @spread): ListClientResult! @guard(with: ["api"])  @field(resolver: "Clients\\listClient")
 
     "List multiple users."
     SearchClient(
@@ -7,3 +7,6 @@ extend type Query {
       name: String @where(operator: "like")
     ): [Client!]! @paginate(defaultCount: 10  model: "App\\Models\\OauthClient")
 }
+
+
+#import ../../../others/inputs/list.graphql

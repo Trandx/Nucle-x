@@ -1,7 +1,7 @@
 import apolloClient from "../../../../apollo";
 import gqlClient from '../gql';
 
-class AuthService {
+class clientService {
 
      async getClient(data = null){
 
@@ -24,4 +24,4 @@ class AuthService {
 }
 
 
-export default new AuthService();
+export default new clientService();

@@ -13,13 +13,11 @@ class ClientPermission extends Migration
      */
     public function up()
     {
-        Schema::create('group_permission', function (Blueprint $table) {
+        Schema::create('client_permissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('group_id');
-            $table->unsignedBigInteger('permission_id');
+            //$table->unsignedBigInteger('group_id');
 
-            $table->foreign('group_id')->references('id')->on('groups');
-            $table->foreign('permission_id')->references('id')->on('permissions');
+            $table->timestamps();
         });
     }
 

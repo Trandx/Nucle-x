@@ -59,6 +59,6 @@ union ListClientResult = ListClientSuccess | Errors
 
 ### input import ####
 
-#import Error.graphql
+#import ../../others/Types/Error.graphql
 
 #import Model/index.graphql

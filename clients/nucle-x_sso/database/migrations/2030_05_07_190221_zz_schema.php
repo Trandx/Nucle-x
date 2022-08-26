@@ -18,11 +18,35 @@ class ZzSchema extends Migration
 
         // });
 
+        Schema::table('roles', function( Blueprint $table){
+            $table->uuid('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate();
+        });
+
         Schema::table('role_users', function( Blueprint $table){
             $table->uuid('user_id')->index();
             $table->uuid('role_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate();
             $table->foreign('role_id')->references('id')->on('roles')->cascadeOnUpdate();
+        });
+
+        Schema::table('user_permissions', function( Blueprint $table){
+            $table->uuid('user_id')->index();
+            $table->uuid('permission_id')->index();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate();
+            $table->foreign('permission_id')->references('id')->on('permissions')->cascadeOnUpdate();
+        });
+
+        Schema::table('client_permissions', function( Blueprint $table){
+            $table->uuid('oauth_client_id')->index();
+            $table->uuid('permission_id')->index();
+            $table->foreign('oauth_client_id')->references('id')->on('oauth_clients')->cascadeOnUpdate();
+            $table->foreign('permission_id')->references('id')->on('permissions')->cascadeOnUpdate();
+        });
+
+        Schema::table('permissions', function( Blueprint $table){
+            $table->uuid('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate();
         });
 
 

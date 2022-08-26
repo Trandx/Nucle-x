@@ -14,8 +14,9 @@ class AuthService {
           //console.log(createUser);
         }).catch(function(error){
             return {
-                status: 500, //error.networkError.response.status||
-                data: error.message
+                code: 500,
+                status: false, //error.networkError.response.status||
+                message: error.message
             }
         })
 

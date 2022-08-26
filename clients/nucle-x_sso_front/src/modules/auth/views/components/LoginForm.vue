@@ -1,8 +1,17 @@
 <template>
   <div class="bg-gray-700 absolute top-0 left-0 bottom-0 right-0">
 
+    
+
     <div class=" m-auto p-4 w-[450px] ">
-        <!-- Modal content -->
+
+      <alert-danger  ref="alert" v-show="alert.name == 'AlertDanger'">
+        <template #alertMessage >
+          {{alert.message}}
+        </template>
+      </alert-danger>
+
+        
         <div class="w-full  rounded-lg shadow bg-gray-800 border border-white">
             
             <div class="py-6 px-6 lg:px-8">
@@ -51,25 +60,25 @@ import { mapActions } from 'vuex';
 
 import formValidate from "../../../../mixins/forms";
 
+import AlertDanger from "../../../../components/Alerts/danger.vue"
+
 export default{
-  name: 'LoginForm',
+  name: "LoginForm",
+  components: {
+    AlertDanger
+  },
 
   data(){
     return {
       user: {},
       goodFormat: true,
+
+      alert: {
+        name: null,
+        message: null,
+      }
     }
   },
-
-  // watch: {
-  //   'user.email' :{
-  //     handler(newval){
-        
-  //     },
-      
-     
-  //   }
-  // },
 
   methods: {
 
@@ -79,7 +88,29 @@ export default{
 
     login(){
 
-      this.addLoggedUserInStore(this.user)
+      const datas = this.addLoggedUserInStore(this.user)
+
+     datas.then((datas) => {
+     
+      if(datas != undefined && (datas.status || datas.code >= 300)){
+        this.alert.message = datas.message
+        this.alert.name = "AlertDanger"
+        this.$refs.alert.open = true;
+        this.$refs.alert.showBtnClose = false 
+
+        setTimeout(()=>{
+          if(this.$refs.alert.open){
+            this.$refs.alert.open = false;
+          }
+        
+        }, 10000)
+          
+      }
+      
+
+    })
+
+    
       
     },
 
@@ -91,11 +122,10 @@ export default{
     }
   },
 
-  // created(){
-  //   this.$watch('user.email', (newVal) => {
-  //     console.log(newVal);
-  //   })
-  // },
+  created(){
+    // this.alert.name = "AlertSuccess"
+    // this.alert.message = "test"
+  },
 
   mixins: [formValidate]
  

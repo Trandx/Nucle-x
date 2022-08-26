@@ -31,13 +31,13 @@ type User {
     created_at: DateTime!
     updated_at: DateTime!
     roles: [Role] @belongsToMany #to solve N+1 queries
-}
-
-type Role {
-    id: ID!
-    name: String!
-    created_at: DateTime!
-    updated_at: DateTime!
+    permissions: [Permission] @belongsToMany
 }
 
 type UserPayload{ user: User! }
+
+
+########## impot User Model from Auth ######
+
+#import ../../../Permissions/Type/Model/index.graphql
+#import ../../../Roles/Type/Model/index.graphql

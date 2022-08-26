@@ -50,6 +50,17 @@ class Role extends Model
     public function users(): BelongsToMany
     {
         //return $this->setConnection('mysql')->belongsTo(User::class);
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, "role_users");
+    }
+
+     /**
+     * To get all users of roles
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function permissions(): BelongsToMany
+    {
+        //return $this->setConnection('mysql')->belongsTo(User::class);
+        return $this->belongsToMany(Permission::class, "permission_roles");
     }
 }

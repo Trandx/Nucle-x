@@ -1,0 +1,6 @@
+extend type Query {
+    ListRole(input: ListInput @spread): ListRoleResult! @guard(with: ["api"])  @field(resolver: "Roles\\listRole")
+
+}
+
+#import ../../../others/inputs/list.graphql

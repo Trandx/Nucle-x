@@ -4,6 +4,13 @@ export default {
        const regex = new RegExp(pattern)
 
         return regex.test(data)
+    },
+
+    methods: {
+        
+        reset(){
+            this.formData = {}
+        }
     }
 
 }

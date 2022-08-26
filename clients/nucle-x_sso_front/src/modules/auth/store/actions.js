@@ -3,7 +3,7 @@ import authService from "../services/auth.service";
 
 export default {
 
- /*async */  loginUserInStore({commit}, data){
+ async   loginUserInStore({commit}, data){
 
         const remember = data.remember || false
 
@@ -11,9 +11,9 @@ export default {
             delete data.remember // remove remember property into the data
         }
         /// call auth service
-     /* return */  authService.login(data).then(function(resp){
+     return   authService.login(data).then(function(resp){
 
-            if(!resp.status && resp.code >= 300){
+            if(/*(resp.status == undefined || resp.code == undefined) || */(!resp.status && resp.code >= 300)){
                 return resp
             }else{
                 const {access_token, user} = resp.data

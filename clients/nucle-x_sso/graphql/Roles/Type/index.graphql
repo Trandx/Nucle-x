@@ -1,0 +1,50 @@
+
+##################################
+
+type UpsertRoleSuccess{
+    status: Boolean!
+    code: String!
+    data: Role!
+}
+
+
+type DeleteRoleSuccess{
+    status: Boolean!
+    code: String!
+    data: Role!
+}
+
+################## for Queries ############
+type Pagination{
+    count: Int!
+    total: Int!
+    perPage: Int!
+    lastPage: Int!
+    firstPage:Int!
+    currentPage: Int!
+    hasMorePage: Boolean!
+}
+type DataPaginate{
+    pagination: Pagination!
+    data:  [Role!]
+}
+type ListRoleSuccess{
+    status: Boolean!
+    code: String!
+    data: DataPaginate!
+}
+
+##################
+
+union UpsertRoleResult = UpsertRoleSuccess | Errors
+union DeleteRoleResult = DeleteRoleSuccess | Errors
+
+union ListRoleResult = ListRoleSuccess | Errors
+
+
+
+### input import ####
+
+#import ../../others/Types/Error.graphql
+
+#import Model/index.graphql

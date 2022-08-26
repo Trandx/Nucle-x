@@ -19,13 +19,14 @@ final class newClientToken
     public function __invoke($_, array $args)
     {
 
-        $user = $this->isClientAdmin();
-
-        if (!$user) {
-            return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
-        }
-
         try {
+            $user = $this->isClientAdmin();
+
+            if (!$user) {
+                return $this->errors("Errors","unauthorized", Response::HTTP_UNAUTHORIZED);
+            }
+
+
             $query = OauthClient::where(['id'=> $args["id"], "user_id" => $user->id]);
 
             $client = $query->first();

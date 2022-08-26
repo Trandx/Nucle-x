@@ -25,7 +25,7 @@ export default {
     name: "Modal",
     data(){
         return {
-            open: true
+            open: false
         }
     },
     // props: {

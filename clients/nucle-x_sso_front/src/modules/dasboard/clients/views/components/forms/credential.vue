@@ -8,7 +8,7 @@
                     </div>
                     <div class=" w-4/5 flex justify-start">
                         <div  class="self-center h-9 max-h-min text-left bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
-                            {{formData.id}} hello
+                            {{formData.id}}
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                         <label for="clientName" class=" text-left my-auto pr-2 font-medium text-gray-900 dark:text-gray-300">client secret</label>
                     </div>
                     <div class=" w-4/5 flex justify-start">
-                        <input type="text" id="clientName" v-model="formData.key" class="self-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="client 1" required="">
+                        <input type="text" id="clientName" v-model="formData.secret" class="self-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="client 1" required="">
                     </div>
                 </div>
 
@@ -40,12 +40,21 @@
 export default {
     name: "Credentials",
 
+    props:["datas"],
+
     data(){
         return {
-            formData: {
-
-            }
+            formData: this.$props["datas"]
         }
+    },
+    watch:{
+        datas: {
+            handler(newValue) {
+                console.log(newValue);
+                this.formData = newValue
+            },
+            deep: true
+        },
     }
 
 }

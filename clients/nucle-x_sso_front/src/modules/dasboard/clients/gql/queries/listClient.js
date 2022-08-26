@@ -34,6 +34,10 @@ const LIST_CLIENT = gql`
                 redirect
                 secret
                 type
+                permissions{
+                    name
+                    id
+                }
             }
             }
         }

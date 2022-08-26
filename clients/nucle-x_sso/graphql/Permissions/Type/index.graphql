@@ -1,0 +1,50 @@
+
+##################################
+
+type UpsertPermissionSuccess{
+    status: Boolean!
+    code: String!
+    data: Permission!
+}
+
+
+type DeletePermissionSuccess{
+    status: Boolean!
+    code: String!
+    data: Permission!
+}
+
+################## for Queries ############
+type Pagination{
+    count: Int!
+    total: Int!
+    perPage: Int!
+    lastPage: Int!
+    firstPage:Int!
+    currentPage: Int!
+    hasMorePage: Boolean!
+}
+type DataPaginate{
+    pagination: Pagination!
+    data:  [Permission!]
+}
+type ListPermissionSuccess{
+    status: Boolean!
+    code: String!
+    data: DataPaginate!
+}
+
+##################
+
+union UpsertPermissionResult = UpsertPermissionSuccess | Errors
+union DeletePermissionResult = DeletePermissionSuccess | Errors
+
+union ListPermissionResult = ListPermissionSuccess | Errors
+
+
+
+### input import ####
+
+#import ../../others/Types/Error.graphql
+
+#import Model/index.graphql
